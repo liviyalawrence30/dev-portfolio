@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maria Liviya L — Tech Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ffe0;
+      --accent2: #7b5cf0;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --card: #13131d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,224,0.07) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(123,92,240,0.08) 0%, transparent 70%);
+      bottom: 50px; left: 5%;
+      pointer-events: none;
+      animation: pulseGlow 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.6; }
+    }
+
+    .hero-content { max-width: 750px; position: relative; }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,255,224,0.3);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 1rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn {
+      padding: 0.85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: #00ccb4; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,255,224,0.25); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--card);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: #16162a; }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .service-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .service-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.2rem;
+    }
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,255,224,0.3);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .project-number {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .project-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+    .project-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .badge-fe { background: rgba(0,255,224,0.1); color: var(--accent); }
+    .badge-ml { background: rgba(123,92,240,0.15); color: #a78bfa; }
+    .badge-dl { background: rgba(236,72,153,0.12); color: #f472b6; }
+    .badge-ip { background: rgba(245,158,11,0.12); color: #fbbf24; }
+
+    /* ── ABOUT / SKILLS ── */
+    #about { background: var(--surface); border-top: 1px solid var(--border); }
+
+    .skills-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .skill-pill {
+      font-size: 0.75rem;
+      padding: 0.45rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .stat-box {
+      border: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-radius: 4px;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.08em; }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; position: relative; overflow: hidden; }
+    .contact-glow {
+      position: absolute;
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,255,224,0.05) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .contact-inner { position: relative; max-width: 600px; margin: 0 auto; }
+    .contact-email {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,255,224,0.3);
+      padding-bottom: 0.2rem;
+      margin: 2rem 0;
+      transition: border-color 0.2s;
+    }
+    .contact-email:hover { border-color: var(--accent); }
+
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #4ade80;
+      border: 1px solid rgba(74,222,128,0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: blink 1.5s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero, section { padding: 5rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ML.dev</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Available for projects</span>
+    <h1>Hi, I'm<br/><span>Maria Liviya L</span></h1>
+    <p class="hero-sub">
+      I build intelligent systems and beautiful interfaces — from pixel-perfect frontends to deep learning pipelines and image processing solutions. Got a project? Let's build it.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary">Hire Me</a>
+      <a href="#projects" class="btn btn-outline">See My Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I Do</div>
+  <h2 class="section-title">My Services</h2>
+  <p class="section-desc">I take projects from idea to execution across four core domains. Each one backed by hands-on experience.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🖥️</span>
+      <div class="service-title">Frontend Development</div>
+      <p class="service-desc">Responsive, modern UIs that look sharp and perform fast. From landing pages to complex dashboards.</p>
+      <div class="service-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">React</span>
+        <span class="tag">Responsive</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🧠</span>
+      <div class="service-title">Machine Learning</div>
+      <p class="service-desc">Predictive models, data pipelines, and ML systems tailored to your business problem.</p>
+      <div class="service-tags">
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Python</span>
+        <span class="tag">Data Analysis</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🤖</span>
+      <div class="service-title">Deep Learning</div>
+      <p class="service-desc">Neural networks, NLP, and AI-powered apps. From model training to deployment-ready solutions.</p>
+      <div class="service-tags">
+        <span class="tag">TensorFlow</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">Keras</span>
+        <span class="tag">NLP</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📷</span>
+      <div class="service-title">Image Processing</div>
+      <p class="service-desc">Computer vision, object detection, image segmentation and analysis for real-world applications.</p>
+      <div class="service-tags">
+        <span class="tag">OpenCV</span>
+        <span class="tag">CNN</span>
+        <span class="tag">YOLO</span>
+        <span class="tag">PIL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Featured Projects</h2>
+  <p class="section-desc">A selection of work spanning UI design, machine learning, and computer vision.</p>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-number">PROJECT 01</div>
+      <div class="project-title">Wind Speed Prediction</div>
+      <p class="project-desc">Machine learning model to forecast wind speed using meteorological data. Enables accurate renewable energy planning and weather analysis through regression techniques and time-series modeling.</p>
+      <span class="project-badge badge-ml">Machine Learning</span>
+    </div>
+    <div class="project-card">
+      <div class="project-number">PROJECT 02</div>
+      <div class="project-title">Pose Estimation for Surveillance</div>
+      <p class="project-desc">Real-time human pose estimation system built for surveillance applications. Detects body keypoints and unusual postures using deep learning and computer vision to flag suspicious activity.</p>
+      <span class="project-badge badge-ip">Image Processing</span>
+    </div>
+    <div class="project-card">
+      <div class="project-number">PROJECT 03</div>
+      <div class="project-title">EV Parking Slot System</div>
+      <p class="project-desc">Smart parking management system for electric vehicles. Uses image processing to detect occupied and vacant slots in real time, with a clean frontend dashboard for live slot availability.</p>
+      <span class="project-badge badge-fe">Frontend + CV</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Building at the intersection of design & intelligence.</h2>
+      <p class="section-desc" style="margin-bottom:1rem;">
+        I'm Maria Liviya — a developer who works across the full spectrum of modern tech. Whether it's crafting a clean UI, training a neural network, or building a computer vision pipeline, I bring the same attention to detail and end-to-end ownership.
+      </p>
+      <p class="section-desc">
+        I take on freelance and contract projects. If you have an idea that needs both technical depth and a polished delivery — I'm the person to call.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-num">4+</span><div class="stat-label">Domains</div></div>
+        <div class="stat-box"><span class="stat-num">10+</span><div class="stat-label">Projects</div></div>
+        <div class="stat-box"><span class="stat-num">100%</span><div class="stat-label">Commitment</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="margin-top:0.5rem;">Tech Stack</div>
+      <div class="skills-row">
+        <span class="skill-pill">HTML5</span>
+        <span class="skill-pill">CSS3</span>
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">React</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">TensorFlow</span>
+        <span class="skill-pill">PyTorch</span>
+        <span class="skill-pill">Keras</span>
+        <span class="skill-pill">Scikit-learn</span>
+        <span class="skill-pill">OpenCV</span>
+        <span class="skill-pill">NumPy</span>
+        <span class="skill-pill">Pandas</span>
+        <span class="skill-pill">Matplotlib</span>
+        <span class="skill-pill">YOLO</span>
+        <span class="skill-pill">Git</span>
+        <span class="skill-pill">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-inner">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-desc" style="margin: 0 auto 1.5rem; text-align:center;">
+      Have a project in mind? Whether it's a quick UI fix or a full-scale AI system — I'd love to hear about it. Drop me an email and let's talk.
+    </p>
+    <div class="availability">
+      <span class="dot"></span> Currently available for projects
+    </div>
+    <br/>
+    <a href="mailto:liviyalawrence30@gmail.com" class="contact-email">liviyalawrence30@gmail.com</a>
+    <br/><br/>
+    <a href="mailto:liviyalawrence30@gmail.com" class="btn btn-primary" style="display:inline-block; margin-top:0.5rem;">Send a Message</a>
+    &nbsp;&nbsp;
+    <a href="https://www.linkedin.com/in/marialiviya" target="_blank" class="btn btn-outline" style="display:inline-block; margin-top:0.5rem;">LinkedIn ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 Maria Liviya L — All rights reserved.</div>
+  <div><a href="https://www.linkedin.com/in/marialiviya" target="_blank" style="color:var(--accent); text-decoration:none;">LinkedIn ↗</a> &nbsp;·&nbsp; Built with HTML · CSS · JS</div>
+</footer>
+
+</body>
+</html>
